@@ -6,7 +6,7 @@ Sequel.migration do
       String :to, null: false, limit: 3
       Date :date, null: false, default: :now.sql_function
       primary_key [:source, :from, :to, :date]
-      Numeric :value
+      Numeric :value, null: false
     end
   end
 end

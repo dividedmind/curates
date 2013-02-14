@@ -5,7 +5,7 @@ Sequel.migration do
       column :from, "text", :null=>false
       column :to, "text", :null=>false
       column :date, "date", :default=>Sequel::CURRENT_DATE, :null=>false
-      column :value, "numeric"
+      column :value, "numeric", :null=>false
       
       primary_key [:source, :from, :to, :date]
     end

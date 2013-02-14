@@ -16,6 +16,8 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+ActiveSupport::Deprecation.silenced = true if ENV['RAILS_ENV'] == "production"
+
 module Curates
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

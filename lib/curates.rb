@@ -1,0 +1,1 @@
+require 'curates/fetchers/paypal'

@@ -1,4 +1,5 @@
 Curates::Application.routes.draw do
+  get ':from/:to' => 'web#graph', constraints: { format: :html }
   get ':from/:to' => 'api#rates', constraints: { format: :json }
   
   # The priority is based upon order of creation:

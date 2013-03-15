@@ -1,0 +1,13 @@
+@import "palette.scss";
+
+$grid: $secondary-b-4;
+
+body {
+  background: $complement-3;
+}
+
+path {
+  fill: none;
+  stroke: $primary-5;
+  stroke-width: 2;
+}

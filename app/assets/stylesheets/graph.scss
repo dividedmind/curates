@@ -1,13 +1,30 @@
 @import "palette.scss";
 
-$grid: $secondary-b-4;
-
 body {
   background: $complement-3;
 }
 
-path {
+.graph {
   fill: none;
   stroke: $primary-5;
   stroke-width: 2;
+}
+
+.axis {
+  path {
+    fill: none;
+    stroke-width: 1;
+    stroke: $secondary-a-3;
+  }
+  text {
+    fill: $primary-2;
+  }
+  
+  .tick line {
+    stroke: $secondary-b-1;
+  }
+}
+
+.rule {
+  stroke: $secondary-b-4;
 }

@@ -9,6 +9,7 @@ gem 'pg'
 gem 'talentbox-sequel-rails'
 
 gem 'haml-rails'
+gem 'sass-rails'
 
 gem 'thin'
 

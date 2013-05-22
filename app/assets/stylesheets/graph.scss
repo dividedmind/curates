@@ -28,3 +28,10 @@ body {
 .rule {
   stroke: $secondary-b-4;
 }
+
+.watermark {
+  stroke: $primary-3;
+  stroke-width: 2;
+  stroke-dasharray: 7;
+  stroke-opacity: .8;
+}

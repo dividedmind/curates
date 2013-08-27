@@ -1,4 +1,4 @@
-{first, last, partition, map} = prelude
+{first, last, partition, map, tail} = prelude
 
 window.draw_graph = -> 
   w = 800
@@ -20,9 +20,16 @@ window.draw_graph = ->
   rates.map (.value) |> d3.extent |> y.domain
 
   const month = 1*30*24*60*60*1000
-  month_ago = Date.now() - 1*month
-  last_month = rates |> partition(-> new Date(it.date) < month_ago) |> last |> map (.value) >> Number |> d3.extent
-  watermark = last_month[0] + (last_month[1] - last_month[0])*0.9 |> y
+
+  watermark = (date) ->
+    watermark-range = [date - 1*month, date]
+    last_month = rates |> partition(-> watermark-range[0] < new Date(it.date) < watermark-range[1]) |> first |> map (.value) >> Number |> d3.extent
+    watermark = last_month[0] + (last_month[1] - last_month[0])*0.9 |> y
+
+  watermark-line = d3.svg.line!
+    .x (d) -> x (new Date(d.date))
+    .y (d) -> watermark (new Date(d.date))
+    .interpolate \monotone
 
   svg.selectAll '.rule'
     .data y.ticks 10
@@ -42,13 +49,28 @@ window.draw_graph = ->
       d: line
     }
 
-  svg.append \line
+  svg.append \path
+    .data([tail rates])
     .attr {
       class: \watermark
-      x1: x.range![0]
-      x2: x.range![1]
-      y1: watermark
-      y2: watermark
+      d: watermark-line
+    }
+
+  inverse-watermark = (date) ->
+    watermark-range = [date - 1*month, date]
+    last_month = rates |> partition(-> watermark-range[0] < new Date(it.date) < watermark-range[1]) |> first |> map (.value) >> Number |> d3.extent
+    watermark = last_month[0] + (last_month[1] - last_month[0])*0.1 |> y
+
+  inverse-watermark-line = d3.svg.line!
+    .x (d) -> x (new Date(d.date))
+    .y (d) -> inverse-watermark (new Date(d.date))
+    .interpolate \monotone
+
+  svg.append \path
+    .data([tail rates])
+    .attr {
+      class: \watermark
+      d: inverse-watermark-line
     }
 
   yaxis = d3.svg.axis!
